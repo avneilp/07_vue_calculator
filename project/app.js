@@ -9,15 +9,20 @@ createApp({
         };
     },
     methods: {
-        calc_result(){
+        calc_result() {
             this.result.split(" ")
 
         },
-        undo(){
+        backspace() {
+            this.value = this.value.slice(0,-1)
         },
-        add_char(x){
+        add_char(x) {
             this.value += x
-        }
+        },
+        undo() {
+        },
+
+
     }
-        
+
 }).mount('#app')

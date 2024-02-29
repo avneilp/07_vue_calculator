@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 
 <head>
     <meta charset="utf-8">
@@ -102,4 +103,105 @@
     </div>
 </body>
 
+=======
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Calculator</title>
+        <link rel = "stylesheet" href = "styles.css">
+    </head>
+    <body>
+        <script type="module" src="app.js"></script>
+        <div id="app">
+            <table>
+                <tr>
+                    <td>
+                        clear
+                    </td>
+                    <td @click = "add_char(' \( ')">
+                        (
+                    </td>
+                    <td @click = "add_char(' \) ')">
+                        )
+                    </td>
+                    <td>
+                        mod
+                    </td>
+                    <td @click = "add_char(' π ')">
+                        π
+                    </td>
+                </tr>
+                <tr>
+                    <td @click = "add_char('7')">
+                        7
+                    </td>
+                    <td @click = "add_char('8')">
+                        8
+                    </td>
+                    <td @click = "add_char('9')">
+                        9
+                    </td>
+                    <td @click = "add_char(' ÷ ')">
+                        ÷
+                    </td>
+                    <td @click = "add_char(' √ ')">
+                        √
+                    </td>
+                </tr>
+                <tr>
+                    <td @click = "add_char('4')">
+                        4
+                    </td>
+                    <td @click = "add_char('5')">
+                        5
+                    </td>
+                    <td @click = "add_char('6')">
+                        6
+                    </td>
+                    <td @click = "add_char(' × ')">
+                        ×
+                    </td>
+                    <td @click = "add_char(' ² ')">
+                        x²
+                    </td>
+                </tr>
+                <tr>
+                    <td @click = "add_char('1')">
+                        1
+                    </td>
+                    <td @click = "add_char('2')">
+                        2
+                    </td>
+                    <td @click = "add_char('3')">
+                        3
+                    </td>
+                    <td @click = "add_char(' - ')">
+                        -
+                    </td>
+                    <td>
+                         
+                    </td>
+                </tr>
+                <tr>
+                    <td @click = "add_char('0')">
+                        0
+                    </td>
+                    <td @click = "add_char('.')">
+                        .
+                    </td>
+                    <td @click = "add_char(' % ')">
+                        %
+                    </td>
+                    <td @click = "add_char(' + ')">
+                        +
+                    </td>
+                    <td>
+                        =
+                    </td>
+                </tr>
+            </table>
+            {{value}}
+        </div>
+    </body>
+>>>>>>> c0841e0ccac68eef7e8770247fc716d87e24a043
 </html>

@@ -49,17 +49,12 @@ createApp({
             }
             this.result = " = " + eval(this.eqn_string)
         },
-        undo(){
+        backspace() {
+            this.value = this.value.slice(0,-1)
         },
-        add_char(x){
+        add_char(x) {
             this.value += x
-        },
-        clear() {
-            this.value = ""
-            this.eqn = []
-            this.eqn_string = ""
-            this.result = ""
         }
     }
-        
+
 }).mount('#app')

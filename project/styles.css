@@ -9,7 +9,7 @@ table, th, td {
     transition:200ms;
     border-spacing: 10px;
     border-radius: 5px;
-    font-size: 1.5em;
+    font-size: 2rem;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color:#3D405B;
 }
@@ -29,8 +29,14 @@ td:hover {
     height: 100px;
 }
 
-
-td {
-
-    height: 150px;
+input {
+    font-size: 2rem;
+    border:0px;
+    color:inherit;
+    background-color:inherit;
+    
 }
+input:focus {
+    outline:none;
+}
+

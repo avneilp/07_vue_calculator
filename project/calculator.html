@@ -9,7 +9,11 @@
     <body>
         <script type="module" src="app.js"></script>
         <div id="app">
-            <table><tr><td id="eqn_box">{{value}}{{result}}</td></tr></table>
+            <table><tr><td id="eqn_box">
+                <!-- <span class="input" role="textbox" contenteditable> {{value}} </span> -->
+                <input type="text" v-model="value">
+                {{result}}
+            </td></tr></table>
             <table>
                 <tr>
                     <td @click = "backspace()">

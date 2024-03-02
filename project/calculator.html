@@ -9,9 +9,10 @@
     <body>
         <script type="module" src="app.js"></script>
         <div id="app">
+            <table><tr><td id="eqn_box">{{value}}{{result}}</td></tr></table>
             <table>
                 <tr>
-                    <td>
+                    <td @click = "clear()">
                         clear
                     </td>
                     <td @click = "add_char(' \( ')">
@@ -20,10 +21,10 @@
                     <td @click = "add_char(' \) ')">
                         )
                     </td>
-                    <td>
+                    <td @click = "add_char(' mod ')">
                         mod
                     </td>
-                    <td @click = "add_char(' π ')">
+                    <td @click = "add_char('π')">
                         π
                     </td>
                 </tr>
@@ -74,8 +75,8 @@
                     <td @click = "add_char(' - ')">
                         -
                     </td>
-                    <td>
-                         
+                    <td rowspan="2" @click = "calc_result()">
+                        =
                     </td>
                 </tr>
                 <tr>
@@ -91,12 +92,8 @@
                     <td @click = "add_char(' + ')">
                         +
                     </td>
-                    <td>
-                        =
-                    </td>
                 </tr>
             </table>
-            {{value}}
         </div>
     </body>
 </html>

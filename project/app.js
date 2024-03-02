@@ -6,17 +6,59 @@ createApp({
             value: "",
             result: "",
             prev_calculations: [],
+            eqn: [],
+            eqn_string: "",
         };
     },
     methods: {
         calc_result(){
-            this.result.split(" ")
-
+            this.eqn = this.value.split(" ")
+            this.eqn_string = ""
+            for (var i = 0; i < this.eqn.length; i++) {
+                if(this.eqn[i] == "×") {
+                    this.eqn[i] = "*"
+                } 
+                if(this.eqn[i] == "÷"){
+                    this.eqn[i] = "/"
+                }
+                if(this.eqn[i] == "√") {
+                    if(this.eqn[i+1] == "" && this.eqn[i+2] == "(") {
+                        this.eqn[i] = "Math.sqrt"
+                    }
+                    else {
+                        this.eqn[i] = "Math.sqrt("
+                        this.eqn[i+1] += ")"
+                    }
+                }
+                if(this.eqn[i] == "²") {
+                    this.eqn[i] = "** 2"
+                }
+                if(this.eqn[i] == "%"){
+                    this.eqn[i] = "/100"
+                }
+                if(this.eqn[i] == "mod"){
+                    this.eqn[i] = "%"
+                }
+                if(this.eqn[i] == "π"){
+                    this.eqn[i] = "Math.PI"
+                }
+                if(this.eqn[i].includes("π")){
+                    this.eqn[i] = this.eqn[i].substring(0, this.eqn[i].length - 1) + "*Math.PI"
+                }
+                this.eqn_string += this.eqn[i]
+            }
+            this.result = " = " + eval(this.eqn_string)
         },
         undo(){
         },
         add_char(x){
             this.value += x
+        },
+        clear() {
+            this.value = ""
+            this.eqn = []
+            this.eqn_string = ""
+            this.result = ""
         }
     }
         

@@ -54,6 +54,20 @@ createApp({
         },
         add_char(x) {
             this.value += x
+        },
+        update(){
+            if(this.value.slice(-1) == "+") {
+                this.value = this.value.slice(0,-1) + " + "
+            }
+            if(this.value.slice(-1) == "-") {
+                this.value = this.value.slice(0,-1) + " - "
+            }
+            if(this.value.slice(-1) == "*") {
+                this.value = this.value.slice(0,-1) + " × "
+            }
+            if(this.value.slice(-1) == "*"){
+                this.value = this.value.slice(0,-1) + "÷"
+            }
         }
     }
 

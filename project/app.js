@@ -2,17 +2,18 @@ import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 createApp({
     data() {
         return {
-            prev_values: [],
-            value: "",
+            prev_expressions: [],
+            expression: "",
             result: "",
             prev_calculations: [],
             eqn: [],
             eqn_string: "",
+            expression_id: 0
         };
     },
     methods: {
         calc_result() {
-            this.eqn = this.value.split(" ")
+            this.eqn = this.expression.split(" ")
             this.eqn_string = ""
             for (var i = 0; i < this.eqn.length; i++) {
                 if (this.eqn[i] == "×") {
@@ -50,25 +51,39 @@ createApp({
             this.result = " = " + eval(this.eqn_string)
         },
         backspace() {
-            this.value = this.value.slice(0, -1)
+            this.prev_expressions.push({ key: this.expression_id, value: this.expression });
+            this.expression_id++
+
+            this.expression = this.expression.slice(0, -1)
+
         },
         add_char(x) {
-            this.value += x
+            //store previous expression into a dictionary with key expression_id
+            this.prev_expressions.push({ key: this.expression_id, value: this.expression });
+            this.expression_id++
+
+            this.expression += x
         },
-        update(){
-            if(this.value.slice(-1) == "+") {
-                this.value = this.value.slice(0,-1) + " + "
+        update() {
+            if (this.expression.slice(-1) == "+") {
+                this.expression = this.expression.slice(0, -1) + " + "
             }
-            if(this.value.slice(-1) == "-") {
-                this.value = this.value.slice(0,-1) + " - "
+            else if (this.expression.slice(-1) == "-") {
+                this.expression = this.expression.slice(0, -1) + " - "
             }
-            if(this.value.slice(-1) == "*") {
-                this.value = this.value.slice(0,-1) + " × "
+            else if (this.expression.slice(-1) == "*") {
+                this.expression = this.expression.slice(0, -1) + " × "
             }
-            if(this.value.slice(-1) == "*"){
-                this.value = this.value.slice(0,-1) + "÷"
+            else if (this.expression.slice(-1) == "*") {
+                this.expression = this.expression.slice(0, -1) + "÷"
             }
+        },
+        undo() {
+            //turn current expression into last recorded expression 
+            this.expression = (this.prev_expressions[this.expression_id - 1].value)
+            this.expression_id -= 1
         }
+
     }
 
 }).mount('#app')

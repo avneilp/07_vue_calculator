@@ -9,9 +9,11 @@
     <body>
         <script type="module" src="app.js"></script>
         <div id="app">
+            <button @click = "undo()"> UNDO </button>
+
             <table><tr><td id="eqn_box">
                 <!-- <span class="input" role="textbox" contenteditable> {{value}} </span> -->
-                <input type="text" v-model="value" @input="update">
+                <input type="text" v-model="expression" @input="update" v-on:keyup.enter = "calc_result()">
                 {{result}}
             </td></tr></table>
             <table>

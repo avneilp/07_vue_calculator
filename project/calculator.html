@@ -11,7 +11,7 @@
         <div id="app">
             <table><tr><td id="eqn_box">
                 <!-- <span class="input" role="textbox" contenteditable> {{value}} </span> -->
-                <input type="text" v-model="value">
+                <input type="text" v-model="value" @input="update">
                 {{result}}
             </td></tr></table>
             <table>

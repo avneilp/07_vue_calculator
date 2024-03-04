@@ -85,12 +85,15 @@ createApp({
             else if(this.expression.slice(-2) == "^2" ) {
                 this.expression = this.expression.slice(0,-2) + " ² "
             }
+            else if(this.expression.slice(-4) == "sqrt") {
+                this.expression = this.expression.slice(0,-4) + " √ "
+            }
             this.prev_expressions[this.expression_id] = this.expression
             this.expression_id++
 
         },
      
-         
+
 
         undo() {
             //turn current expression into last recorded expression 

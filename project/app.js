@@ -5,10 +5,10 @@ createApp({
             prev_expressions: {"0":""},
             expression: "",
             result: "",
-            prev_calculations: [],
+            prev_calculation: "",
             eqn: [],
             eqn_string: "",
-            expression_id: 1
+            expression_id: 1,
         };
     },
     methods: {
@@ -49,6 +49,10 @@ createApp({
                 this.eqn_string += this.eqn[i]
             }
             this.result = " = " + eval(this.eqn_string)
+            this.prev_calculation = this.expression + this.result
+            this.expression = ""
+            this.result = ""
+
         },
         backspace() {
             this.prev_expressions[this.expression_id] = this.expression
@@ -68,7 +72,6 @@ createApp({
         update() {
             if (this.expression.slice(-1) == "+") {
                 this.expression = this.expression.slice(0, -1) + " + "
-
             }
             else if (this.expression.slice(-1) == "-") {
                 this.expression = this.expression.slice(0, -1) + " - "

@@ -14,7 +14,8 @@
             {{expression_id}}
 
             <table><tr><td id="eqn_box">
-                <!-- <span class="input" role="textbox" contenteditable> {{value}} </span> -->
+                {{prev_calculation}}
+                <br>
                 <input type="text" v-model="expression" @input="update" v-on:keyup.enter = "calc_result()">
                 {{result}}
             </td></tr></table>

@@ -2,13 +2,13 @@ import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 createApp({
     data() {
         return {
-            prev_expressions: [],
+            prev_expressions: {"0":""},
             expression: "",
             result: "",
             prev_calculations: [],
             eqn: [],
             eqn_string: "",
-            expression_id: 0
+            expression_id: 1
         };
     },
     methods: {
@@ -51,7 +51,7 @@ createApp({
             this.result = " = " + eval(this.eqn_string)
         },
         backspace() {
-            this.prev_expressions.push({ key: this.expression_id, value: this.expression });
+            this.prev_expressions[this.expression_id] = this.expression
             this.expression_id++
 
             this.expression = this.expression.slice(0, -1)
@@ -59,14 +59,16 @@ createApp({
         },
         add_char(x) {
             //store previous expression into a dictionary with key expression_id
-            this.prev_expressions.push({ key: this.expression_id, value: this.expression });
+            this.expression += x
+
+            this.prev_expressions[this.expression_id] = this.expression
             this.expression_id++
 
-            this.expression += x
         },
         update() {
             if (this.expression.slice(-1) == "+") {
                 this.expression = this.expression.slice(0, -1) + " + "
+
             }
             else if (this.expression.slice(-1) == "-") {
                 this.expression = this.expression.slice(0, -1) + " - "
@@ -75,13 +77,27 @@ createApp({
                 this.expression = this.expression.slice(0, -1) + " × "
             }
             else if (this.expression.slice(-1) == "*") {
-                this.expression = this.expression.slice(0, -1) + "÷"
+                this.expression = this.expression.slice(0, -1) + " ÷ "
             }
+            else if(this.expression.slice(-2) == "^2" ) {
+                this.expression = this.expression.slice(0,-2) + " ² "
+            }
+            this.prev_expressions[this.expression_id] = this.expression
+            this.expression_id++
+
         },
+     
+         
+
         undo() {
             //turn current expression into last recorded expression 
-            this.expression = (this.prev_expressions[this.expression_id - 1].value)
+
+
+            delete this.prev_expressions[this.expression_id]
+            this.expression = (this.prev_expressions[this.expression_id - 1])
             this.expression_id -= 1
+            
+
         }
 
     }

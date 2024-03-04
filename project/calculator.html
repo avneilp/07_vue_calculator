@@ -10,6 +10,8 @@
         <script type="module" src="app.js"></script>
         <div id="app">
             <button @click = "undo()"> UNDO </button>
+            {{prev_expressions}}
+            {{expression_id}}
 
             <table><tr><td id="eqn_box">
                 <!-- <span class="input" role="textbox" contenteditable> {{value}} </span> -->

@@ -10,13 +10,10 @@
         <script type="module" src="app.js"></script>
         <div id="app">
             <button @click = "undo()"> UNDO </button>
-            {{prev_expressions}}
-            {{expression_id}}
-
             <table><tr><td id="eqn_box">
                 {{prev_calculation}}
                 <br>
-                <input type="text" v-model="expression" @input="update" v-on:keyup.enter = "calc_result()">
+                <input type="text" v-model="expression" @keydown="update" v-on:keyup.enter = "calc_result()">
                 {{result}}
             </td></tr></table>
             <table>

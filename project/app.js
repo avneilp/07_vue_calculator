@@ -9,9 +9,9 @@ createApp({
             eqn: [],
             eqn_string: "",
             expression_id: 1,
-            left_paren: 0,
-            right_paren: 0,
-            last_paren: ")"
+            error: false,
+            regExp: /[a-zA-A]/g,
+
         };
     },
     methods: {
@@ -24,10 +24,10 @@ createApp({
                 if (this.eqn[i] == "×") {
                     this.eqn[i] = "*"
                 }
-                if (this.eqn[i] == "÷") {
+                else if (this.eqn[i] == "÷") {
                     this.eqn[i] = "/"
                 }
-                if (this.eqn[i] == "√") {
+                else if (this.eqn[i] == "√") {
                     if (this.eqn[i + 1] == "" && this.eqn[i + 2] == "(") {
                         this.eqn[i] = "Math.sqrt"
                     }
@@ -36,46 +36,57 @@ createApp({
                         this.eqn[i + 1] += ")"
                     }
                 }
-                if (this.eqn[i] == "²") {
+                else if (this.eqn[i] == "²") {
                     this.eqn[i] = "** 2"
                 }
-                if (this.eqn[i] == "%") {
+                else if (this.eqn[i] == "%") {
                     this.eqn[i] = "/100"
                 }
-                if (this.eqn[i] == "mod") {
+                else if (this.eqn[i] == "mod") {
                     this.eqn[i] = "%"
                 }
-                if (this.eqn[i] == "π") {
+                else if (this.eqn[i] == "π") {
                     this.eqn[i] = "Math.PI"
                 }
-                if (this.eqn[i].includes("π")) {
+                else if (this.eqn[i].includes("π")) {
                     this.eqn[i] = this.eqn[i].substring(0, this.eqn[i].length - 1) + "*Math.PI"
                 }
-                if (this.eqn[i] == "(") {
-                    this.left_paren++
-                    this.last_paren = "("
+                else if (this.regExp.test(this.eqn[i])) {
+                    this.error = true
                 }
-                if (this.eqn[i] == ")") {
-                    this.right_paren++
-                    this.last_paren = ")"
-                }
+
                 this.eqn_string += this.eqn[i]
+
             }
 
-            if ((this.left_paren != this.right_paren) || (this.last_paren == "(")) {
-                this.result = "= SYNTAX ERROR"
+
+
+
+            try {
+                eval(this.eqn_string)
+            }
+            catch (e) {
+                if (e instanceof SyntaxError) {
+                    this.error = true
+                }
+            }
+
+            if (this.error) {
+                this.result = " = SYNTAX ERROR"
             }
             else {
                 this.result = " = " + eval(this.eqn_string)
-
-
             }
+
+
+
             this.prev_calculation = this.expression + this.result
             this.expression = ""
             this.result = ""
             this.last_paren = ")"
             this.left_paren = 0
             this.right_paren = 0
+            this.error = false
 
         },
         backspace() {
@@ -95,33 +106,41 @@ createApp({
         },
 
         update(event) {
-            if (
-            if (this.expression.slice(-1) == "+") {
-                this.expression = this.expression.slice(0, -1) + " + "
+            if (event.key != "Backspace") {
+                if (this.expression.slice(-1) == "+") {
+                    this.expression = this.expression.slice(0, -1) + " + "
+                }
+                else if (this.expression.slice(-1) == "-") {
+                    this.expression = this.expression.slice(0, -1) + " - "
+                }
+                else if (this.expression.slice(-1) == "*") {
+                    this.expression = this.expression.slice(0, -1) + " × "
+                }
+                else if (this.expression.slice(-1) == "*") {
+                    this.expression = this.expression.slice(0, -1) + " ÷ "
+                }
+                else if (this.expression.slice(-2) == "^2") {
+                    this.expression = this.expression.slice(0, -2) + " ² "
+                }
+                else if (this.expression.slice(-4) == "sqrt") {
+                    this.expression = this.expression.slice(0, -4) + " √ "
+                }
+                else if (this.expression.slice(-1) == "(") {
+                    this.expression = this.expression.slice(0, -1) + " ( "
+                }
+                else if (this.expression.slice(-1) == ")") {
+                    this.expression = this.expression.slice(0, -1) + " ) "
+                }
+                else if (this.expression.slice(-3) == "mod") {
+                    this.expression = this.expression.slice(0, -3) + " mod "
+                }
+                else if (this.expression.slice(-1) == "%") {
+                    this.expression = this.expression.slice(0, -1) + " %"
+                }
+                this.prev_expressions[this.expression_id] = this.expression
+                this.expression_id++
+
             }
-            else if (this.expression.slice(-1) == "-") {
-                this.expression = this.expression.slice(0, -1) + " - "
-            }
-            else if (this.expression.slice(-1) == "*") {
-                this.expression = this.expression.slice(0, -1) + " × "
-            }
-            else if (this.expression.slice(-1) == "*") {
-                this.expression = this.expression.slice(0, -1) + " ÷ "
-            }
-            else if (this.expression.slice(-2) == "^2") {
-                this.expression = this.expression.slice(0, -2) + " ² "
-            }
-            else if (this.expression.slice(-4) == "sqrt") {
-                this.expression = this.expression.slice(0, -4) + " √ "
-            }
-            else if (this.expression.slice(-1) == "(") {
-                this.expression = this.expression.slice(0, -1) + " ( "
-            }
-            else if (this.expression.slice(-1) == ")") {
-                this.expression = this.expression.slice(0, -1) + " ) "
-            }
-            this.prev_expressions[this.expression_id] = this.expression
-            this.expression_id++
 
         },
 

@@ -99,7 +99,6 @@ createApp({
         add_char(x) {
             //store previous expression into a dictionary with key expression_id
             this.expression += x
-
             this.prev_expressions[this.expression_id] = this.expression
             this.expression_id++
 
@@ -137,10 +136,11 @@ createApp({
                 else if (this.expression.slice(-1) == "%") {
                     this.expression = this.expression.slice(0, -1) + " %"
                 }
-                this.prev_expressions[this.expression_id] = this.expression
-                this.expression_id++
 
             }
+            this.prev_expressions[this.expression_id] = this.expression
+            this.expression_id++
+
 
         },
 

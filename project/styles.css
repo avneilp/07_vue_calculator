@@ -20,7 +20,7 @@ td {
 }
 td:hover {
     background-color: #F2CC8F;
-    color:#E07A5F
+    color:#E07A5F;
 }
 #app {
     text-align:center;
@@ -34,7 +34,6 @@ input {
     border:0px;
     color:inherit;
     background-color:inherit;
-    
 }
 input:focus {
     outline:none;

@@ -34,8 +34,22 @@ input {
     border:0px;
     color:inherit;
     background-color:inherit;
+    text-align: center;
 }
 input:focus {
     outline:none;
 }
-
+button {
+    font-size: 2rem;
+    border: 0px;
+    border-radius: 5px;
+    padding: 10px 0px;
+    width:48.75%;
+    color:#3D405B;
+    background-color: #E07A5F;
+    transition: 200ms;
+}
+button:hover {
+    background-color: #F2CC8F;
+    color:#E07A5F;
+}

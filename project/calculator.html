@@ -11,11 +11,10 @@
         <div id="app">
             <button @click = "undo()"> UNDO </button>
             <table><tr><td id="eqn_box">
-                {{prev_calculation}} {{eqn_string}} {{eqn}}
+                {{prev_calculation}}
 
                 <br>
-                <input type="text" v-model="expression" @keydown="update" v-on:keyup.enter = "calc_result()">
-                {{result}}
+                <input type="text" v-model="expression" @keydown="update($event)" @keyup.enter = "calc_result()">
             </td></tr></table>
             <table>
                 <tr>

@@ -11,7 +11,7 @@ createApp({
             expression_id: 1,
             error: false,
             regExp: /[a-zA-A]/g,
-
+            key_pressed: "",
         };
     },
     methods: {
@@ -55,6 +55,9 @@ createApp({
                 else if (this.eqn[i].includes("π")) {
                     this.eqn[i] = this.eqn[i].substring(0, this.eqn[i].length - 1) + "* Math.PI"
                 }
+                else if(this.eqn[i] == "(" && (/\d/.test(this.eqn[i-1]) || this.eqn[i-1] == "Math.PI")){
+                    this.eqn[i] = " * ("
+                }
                 else if (this.regExp.test(this.eqn[i])) {
                     this.error = true
                 }
@@ -80,9 +83,6 @@ createApp({
             this.prev_calculation = this.expression + this.result
             this.expression = ""
             this.result = ""
-            this.last_paren = ")"
-            this.left_paren = 0
-            this.right_paren = 0
             this.error = false
 
         },
@@ -101,7 +101,24 @@ createApp({
         },
 
         update(event) {
-            if (event.key != "Backspace") {
+            this.key_pressed = event.key
+        },
+
+
+
+        undo() {
+            //turn current expression into last recorded expression 
+            if(this.expression_id >= 1){
+                delete this.prev_expressions[this.expression_id]
+                this.expression_id --
+                this.expression = (this.prev_expressions[this.expression_id - 1])
+            }
+        }
+
+    },
+    watch: {
+        expression(newValue) {
+            if (this.key_pressed != "Backspace") {
                 if (this.expression.slice(-1) == "+") {
                     this.expression = this.expression.slice(0, -1) + " + "
                 }
@@ -126,7 +143,7 @@ createApp({
                 else if (this.expression.slice(-1) == "(") {
                     this.expression = this.expression.slice(0, -1) + " ( "
                 }
-                else if (this.expression.slice(-1) == ")") {
+                else if (this.expression.slice(-1) === ")") {
                     this.expression = this.expression.slice(0, -1) + " ) "
                 }
                 else if (this.expression.slice(-3) == "mod") {
@@ -139,22 +156,11 @@ createApp({
                     this.expression = this.expression.slice(0, -2) + "π"
                 }
             }
-
-            this.prev_expressions[this.expression_id] = this.expression
-            this.expression_id++
-        },
-
-
-
-        undo() {
-            //turn current expression into last recorded expression 
-            delete this.prev_expressions[this.expression_id]
-            this.expression = (this.prev_expressions[this.expression_id - 1])
-            this.expression_id -= 1
-
-
+            if(this.prev_expressions[this.expression_id-1] != this.expression){
+                this.prev_expressions[this.expression_id] = this.expression
+                this.expression_id++
+            }
         }
-
     }
 
 }).mount('#app')
